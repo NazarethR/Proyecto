@@ -12,9 +12,10 @@ import java.awt.Color;
  */
 public enum TemaDeLuces {
 
-    APAGADO(Color.DARK_GRAY), LUCESBAJAS(Color.YELLOW), LUCESALTAS(Color.WHITE);
+    APAGADO(Color.DARK_GRAY), LUCESBAJAS(Color.YELLOW), LUCESALTAS(Color.WHITE),INTERMITENTES(Color.ORANGE),DIRECCIONALES_IZQUIERDA(Color.GREEN),DIRECCIONALES_DERECHA(Color.GREEN),
+    LUCES_FRENO(Color.RED);
+ 
     
-
     private Color luces;
 
     public Color getLuces() {

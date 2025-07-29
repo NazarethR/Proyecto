@@ -11,17 +11,51 @@ package SistemaIluminaciones;
 public class Luces {
 
     private TemaDeLuces actuales;
+    private Motor motor;
 
-    public Luces() {
+    public Luces(Motor motor) {
         this.actuales = TemaDeLuces.APAGADO;
+        this.motor = motor;
+    }
+
+    private boolean puedeEncenderLuces() {
+        return motor != null && motor.estaEncendido();
     }
 
     public void luzBajaEncendida() {
-        actuales = actuales.LUCESBAJAS;
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.LUCESBAJAS;
+        }
     }
 
     public void luzAltaEncendidas() {
-        actuales = actuales.LUCESALTAS;
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.LUCESALTAS;
+        }
+    }
+
+    public void intermitentesEncendidas() {
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.INTERMITENTES;
+        }
+    }
+
+    public void direccionalIzquierdaEncendida() {
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.DIRECCIONALES_IZQUIERDA;
+        }
+    }
+
+    public void direccionalDerechaEncendida() {
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.DIRECCIONALES_DERECHA;
+        }
+    }
+
+    public void lucesFrenoEncendidas() {
+        if (puedeEncenderLuces()) {
+            actuales = TemaDeLuces.LUCES_FRENO;
+        }
     }
 
     public void luzApagadas() {
@@ -33,5 +67,4 @@ public class Luces {
         return actuales;
     }
 
-    
 }
