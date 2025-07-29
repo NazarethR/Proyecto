@@ -4,6 +4,8 @@
  */
 package SistemaIluminaciones;
 
+import SistemaEncendido.Motor;
+
 /**
  *
  * @author danny
