@@ -4,44 +4,49 @@
  */
 package Parabrisas;
 
+import SistemaEncendido.Motor;
+
 /**
  *
  * @author nazar
  */
-public class Palabrisas  {
-  private SistemaEncendido motor; // referencia al sistema de encendido
-    private int velocidad; // 0 = apagado, 1-3 = niveles de velocidad
+public class Palabrisas {
 
-    public Palabrisas(SistemaEncendido motor) {
+    private Motor motor; // dependencia
+    private int velocidad;     
+    
+    public Palabrisas(Motor motor) {
         this.motor = motor;
-        this.velocidad = 0; // apagado por defecto
+        this.velocidad = 0;
+    }
+
+    public void setVelocidad(int velocidad) {
+        if (motor.estaEncendido()) {
+            this.velocidad = velocidad;
+        } else {
+            this.velocidad = 0; // se apaga si el motor está apagado
+        }
     }
 
     public int getVelocidad() {
         return velocidad;
     }
 
-    public void setVelocidad(int velocidad) {
-        // Solo cambia la velocidad si el motor está encendido
-        if (motor.estaEncendido()) {
-            this.velocidad = velocidad;
-        } else {
-            this.velocidad = 0; // forzar apagado si el motor no está encendido
-        }
-    }
-
     public String obtenerEstado() {
         if (!motor.estaEncendido()) {
-            return "Motor apagado. Palabrisas desactivado.";
+            return "Motor apagado. Palabrisas apagado.";
         }
 
         return switch (velocidad) {
-            case 1 -> "Velocidad lenta";
-            case 2 -> "Velocidad media";
-            case 3 -> "Velocidad rápida";
-            default -> "Palabrisas apagado";
+            case 1 ->
+                "Velocidad lenta";
+            case 2 ->
+                "Velocidad media";
+            case 3 ->
+                "Velocidad rápida";
+            default ->
+                "Palabrisas apagado";
         };
     }
 
-    
 }
