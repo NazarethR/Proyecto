@@ -15,9 +15,9 @@ public class Luces {
     private TemaDeLuces actuales;
     private Motor motor;
 
-    public Luces(Motor motor) {
+    public Luces() {
         this.actuales = TemaDeLuces.APAGADO;
-        this.motor = motor;
+        this.motor = new Motor();
     }
 
     private boolean puedeEncenderLuces() {
