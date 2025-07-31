@@ -61,7 +61,7 @@ public class Luces {
     }
 
     public void luzApagadas() {
-        actuales = actuales.APAGADO;
+        actuales = TemaDeLuces.APAGADO;
 
     }
 
