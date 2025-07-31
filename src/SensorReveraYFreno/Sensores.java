@@ -47,4 +47,8 @@ public class Sensores {
     public void activarFreno(){
         frenoMano=true;
     }
+    
+    public boolean PermitirMoverse(){
+        return !frenoMano && !ObstaculoSen;
+    }
 }
