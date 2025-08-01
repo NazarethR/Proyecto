@@ -41,6 +41,7 @@ public class Combustible {
     }
 
     public int RecargarGasolina(){
+        Cantidad=100;
         return 100;
     }
     
@@ -49,7 +50,6 @@ public class Combustible {
     }
     
     public void GastarGasolina(){
-        if(motorEstado.estaEncendido())
         Cantidad=Cantidad - Consumo;
     }
 }
