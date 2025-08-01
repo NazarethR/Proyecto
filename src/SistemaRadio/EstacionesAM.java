@@ -9,13 +9,13 @@ package SistemaRadio;
  * @author duvan
  */
 public enum EstacionesAM {
-    RadioSonora("700"), RadioRica("640"), RadioCostaRica("930"),
-    Radio1010("1010"),RadioCorobici("1240"),RadioCuCu("1200"),
-    RadioVision("1280"),RadioVictoria("1180"),RadioChorotega("1100"),
-    RadioLaFuenteMusical("1300"),RadioGuanacaste("1380"),RadioNicoya("1560"),
-    RadioQuepos("1600"),RadioBuenísima("1500"),RadioLaGigante("800"),
-    RadioSanCarlos("1430"),RadioPampa("1420"),RadioSideral("1340"),
-    RadioSinai("1400"),RadioCulturalTilaran("1580"),RadioCulturalTurrialba("1600");
+    RadioSonora("700 Radio sonora"), RadioRica("640 Radio Rica"), RadioCostaRica("930 Radio Costa Rica"),
+    Radio1010("1010 Radio1010"),RadioCorobici("1240 Radio Corobicí"),RadioCuCu("1200 Radio Cucu"),
+    RadioVision("1280 Radio Vision"),RadioVictoria("1180 Radio Victoria"),RadioChorotega("1100 Radio Chorotega"),
+    RadioLaFuenteMusical("1300 Radio La fuente Musical"),RadioGuanacaste("1380 Radio Guanacste"),RadioNicoya("1560 Radio Nicoya"),
+    RadioQuepos("1600 Radio Quepos"),RadioBuenísima("1500 Radio Buenísima"),RadioLaGigante("800 Radio La Gigante"),
+    RadioSanCarlos("1430 Radio San Carlos"),RadioPampa("1420 Radio Pampa"),RadioSideral("1340 Radio Sideral"),
+    RadioSinai("1400 Radio Sinaí"),RadioCulturalTilaran("1580 Radio Cultural"),RadioCulturalTurrialba("1600 Radio Cultural Turrialba");
 
     private String Estacion;
 
