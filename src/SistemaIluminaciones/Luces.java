@@ -46,17 +46,6 @@ public class Luces {
         }
     }
 
-    public void direccionalIzquierdaEncendida() {
-        if (puedeEncenderLuces()) {
-            actuales = TemaDeLuces.DIRECCIONALES_IZQUIERDA;
-        }
-    }
-
-    public void direccionalDerechaEncendida() {
-        if (puedeEncenderLuces()) {
-            actuales = TemaDeLuces.DIRECCIONALES_DERECHA;
-        }
-    }
 
     public void lucesFrenoEncendidas() {
         if (puedeEncenderLuces()) {

@@ -7,41 +7,53 @@ package GUI;
 import SistemaCombustible.Combustible;
 import SensorReveraYFreno.Sensores;
 import java.awt.Color;
+import SistemaEncendido.Motor;
+import SistemaIluminaciones.Luces;
+
 /**
  *
  * @author duvan
  */
 public class FrmCarro extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCarro.class.getName());
 
     Combustible Gasolina = new Combustible();
     Sensores FrenoMano = new Sensores();
-    
-    private boolean SensorDelante; 
-    private boolean SensorDetras; 
-    
+    Motor motor = new Motor();
+    Luces luces = new Luces();
+
+    private boolean SensorDelante;
+    private boolean SensorDetras;
+    private int cont;
+
     /**
      * Creates new form FrmCarro
      */
     public FrmCarro() {
-        initComponents(); 
+        initComponents();
         SeeGasolina.setValue(Gasolina.ObtenerCantidad());
         Sensor.setVisible(false);
+
+        luzBaja1.setVisible(false);
+        luzBaja2.setVisible(false);
+        luzAlta1.setVisible(false);
+        luzAlta2.setVisible(false);
+
     }
-    
-    public void ActivarSensor(){
-        if(FrenoMano.isFrenoMano() && !this.SensorDelante && !this.SensorDetras){
+
+    public void ActivarSensor() {
+        if (FrenoMano.isFrenoMano() && !this.SensorDelante && !this.SensorDetras) {
             Sensor.setVisible(true);
         }
     }
-    
-    public void DesactivarSensor(){
-        if(!FrenoMano.isFrenoMano() && this.SensorDelante && this.SensorDetras){
+
+    public void DesactivarSensor() {
+        if (!FrenoMano.isFrenoMano() && this.SensorDelante && this.SensorDetras) {
             Sensor.setVisible(false);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,15 +65,21 @@ public class FrmCarro extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ImagenDetras = new javax.swing.JLabel();
-        ImagenDeFrente = new javax.swing.JLabel();
         SeeVelocimetro = new javax.swing.JProgressBar();
         jLabel5 = new javax.swing.JLabel();
         SeeRPM = new javax.swing.JProgressBar();
         SeeGasolina = new javax.swing.JProgressBar();
         btnFrenoMano = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        luzBaja2 = new javax.swing.JButton();
+        luzBaja1 = new javax.swing.JButton();
         btnRecargar = new javax.swing.JButton();
+        luzAlta2 = new javax.swing.JButton();
+        luzAlta1 = new javax.swing.JButton();
+        ImagenDeFrente = new javax.swing.JLabel();
         Sensor = new javax.swing.JTextField();
+        btnEncenderApagar = new javax.swing.JButton();
+        btnLuces = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,17 +95,6 @@ public class FrmCarro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
-
-        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
-        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseExited(evt);
-            }
-        });
-        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
 
         SeeVelocimetro.setBackground(new java.awt.Color(255, 255, 51));
         jPanel1.add(SeeVelocimetro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 440, 320, 30));
@@ -118,6 +125,22 @@ public class FrmCarro extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
 
+        luzBaja2.setBackground(new java.awt.Color(153, 153, 0));
+        luzBaja2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                luzBaja2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(luzBaja2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, 20, 20));
+
+        luzBaja1.setBackground(new java.awt.Color(153, 153, 0));
+        luzBaja1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                luzBaja1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(luzBaja1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 560, 20, 20));
+
         btnRecargar.setText("Recargar Gasolina");
         btnRecargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +149,28 @@ public class FrmCarro extends javax.swing.JFrame {
         });
         jPanel1.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1540, 240, -1, -1));
 
+        luzAlta2.setBackground(new java.awt.Color(255, 255, 255));
+        luzAlta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                luzAlta2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(luzAlta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 90, 30));
+
+        luzAlta1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(luzAlta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 30));
+
+        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
+        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseExited(evt);
+            }
+        });
+        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+
         Sensor.setEditable(false);
         Sensor.setBackground(new java.awt.Color(255, 0, 0));
         Sensor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -133,15 +178,37 @@ public class FrmCarro extends javax.swing.JFrame {
         Sensor.setText("¡SENSOR O FRENO ACTIVADO!");
         jPanel1.add(Sensor, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 920, -1, 40));
 
+        btnEncenderApagar.setText("Motor EncenderApagar");
+        btnEncenderApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEncenderApagarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEncenderApagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, -1, -1));
+
+        btnLuces.setText("Luces bajas,altas");
+        btnLuces.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLucesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLuces, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -153,19 +220,19 @@ public class FrmCarro extends javax.swing.JFrame {
 
     private void ImagenDetrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDetrasMouseEntered
         ActivarSensor();
-        this.SensorDetras=true;
+        this.SensorDetras = true;
     }//GEN-LAST:event_ImagenDetrasMouseEntered
 
     private void ImagenDeFrenteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDeFrenteMouseEntered
         ActivarSensor();
-        this.SensorDelante=true;
+        this.SensorDelante = true;
     }//GEN-LAST:event_ImagenDeFrenteMouseEntered
 
     private void btnFrenoManoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrenoManoActionPerformed
-        if(FrenoMano.isFrenoMano()){
+        if (FrenoMano.isFrenoMano()) {
             FrenoMano.desactivarFreno();
             btnFrenoMano.setForeground(Color.RED);
-        }else{
+        } else {
             FrenoMano.activarFreno();
             btnFrenoMano.setForeground(Color.GREEN);
         }
@@ -173,13 +240,63 @@ public class FrmCarro extends javax.swing.JFrame {
 
     private void ImagenDeFrenteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDeFrenteMouseExited
         DesactivarSensor();
-        this.SensorDelante=true;
+        this.SensorDelante = true;
     }//GEN-LAST:event_ImagenDeFrenteMouseExited
 
     private void ImagenDetrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDetrasMouseExited
         DesactivarSensor();
-        this.SensorDetras=true;
+        this.SensorDetras = true;
     }//GEN-LAST:event_ImagenDetrasMouseExited
+
+    private void btnEncenderApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncenderApagarActionPerformed
+        if (motor.estaEncendido()) {
+            motor.motorApagado();
+            btnEncenderApagar.setForeground(Color.RED);
+        } else {
+            motor.motorEncendido();
+            btnEncenderApagar.setForeground(Color.GREEN);
+        }
+    }//GEN-LAST:event_btnEncenderApagarActionPerformed
+
+    private void btnLucesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLucesActionPerformed
+        cont++;
+        if (cont == 3 || cont == 0) {
+            cont = 0;
+            luces.luzApagadas();
+
+            luzBaja1.setVisible(false);
+            luzBaja2.setVisible(false);
+            luzAlta1.setVisible(false);
+            luzAlta2.setVisible(false);
+
+        } else if (cont == 1 && motor.estaEncendido()) {
+            luces.luzBajaEncendida();
+            luzBaja1.setVisible(true);
+            luzBaja2.setVisible(true);
+
+        } else if (cont == 2 && motor.estaEncendido()) {
+            luzBaja1.setVisible(false);
+            luzBaja2.setVisible(false);
+            
+            luces.luzAltaEncendidas();
+            luzAlta1.setVisible(true);
+            luzAlta2.setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_btnLucesActionPerformed
+
+    private void luzBaja2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzBaja2ActionPerformed
+
+    }//GEN-LAST:event_luzBaja2ActionPerformed
+
+    private void luzBaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzBaja1ActionPerformed
+
+    }//GEN-LAST:event_luzBaja1ActionPerformed
+
+    private void luzAlta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzAlta2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_luzAlta2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,11 +330,17 @@ public class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JProgressBar SeeRPM;
     private javax.swing.JProgressBar SeeVelocimetro;
     private javax.swing.JTextField Sensor;
+    private javax.swing.JButton btnEncenderApagar;
     private javax.swing.JButton btnFrenoMano;
+    private javax.swing.JButton btnLuces;
     private javax.swing.JButton btnRecargar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton luzAlta1;
+    private javax.swing.JButton luzAlta2;
+    private javax.swing.JButton luzBaja1;
+    private javax.swing.JButton luzBaja2;
     // End of variables declaration//GEN-END:variables
 
 }
