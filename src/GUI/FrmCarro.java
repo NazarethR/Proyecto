@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import Cinturones.Asientos;
+import Parabrisas.Palabrisas;
 import SistemaCombustible.Combustible;
 import SensorReveraYFreno.Sensores;
 import java.awt.Color;
@@ -11,6 +13,7 @@ import SistemaEncendido.Motor;
 import SistemaIluminaciones.Luces;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.Timer;
 
 /**
@@ -25,10 +28,13 @@ public final class FrmCarro extends javax.swing.JFrame {
     Sensores FrenoMano = new Sensores();
     Motor motor = new Motor();
     Luces luces = new Luces();
+    Asientos asiento = new Asientos();
+    Palabrisas palabrisas = new Palabrisas(motor);
 
     private boolean SensorDelante;
     private boolean SensorDetras;
     private int cont;
+    private int tiempo;
 
     private boolean esperar;
     private boolean puerta1Abierta = false;
@@ -43,7 +49,7 @@ public final class FrmCarro extends javax.swing.JFrame {
         initComponents();
         timer.start();
         Activo.start();
-
+        
         NoGas.setVisible(false);
 
         Sensor.setVisible(false);
@@ -57,11 +63,11 @@ public final class FrmCarro extends javax.swing.JFrame {
     }
 
     public void ActivarSensor() {
-             Sensor.setVisible(true);
+        Sensor.setVisible(true);
     }
 
     public void DesactivarSensor() {
-            Sensor.setVisible(false);
+        Sensor.setVisible(false);
     }
 
     /**
@@ -102,13 +108,31 @@ public final class FrmCarro extends javax.swing.JFrame {
         btnFrenoDePieXD = new javax.swing.JButton();
         Numeracion = new javax.swing.JTextField();
         txtKilometraje = new javax.swing.JTextField();
-        ImagenDeFrente = new javax.swing.JLabel();
         ImagenDetras = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnAbr4 = new javax.swing.JButton();
+        btnDes4 = new javax.swing.JButton();
+        btnDes = new javax.swing.JButton();
+        btnAbr = new javax.swing.JButton();
+        btnAbr2 = new javax.swing.JButton();
+        btnDes2 = new javax.swing.JButton();
+        btnDes3 = new javax.swing.JButton();
+        btnAbr3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        PalaApagado = new javax.swing.JButton();
+        PalaVelo1 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        PalaVelo2 = new javax.swing.JButton();
+        PalaVelo3 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jpalabrisas = new javax.swing.JButton();
+        ImagenDeFrente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         SeeVelocimetro.setBackground(new java.awt.Color(255, 255, 51));
@@ -169,7 +193,6 @@ public final class FrmCarro extends javax.swing.JFrame {
         });
         jPanel1.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, -1, -1));
 
-        luzAlta2.setBackground(new java.awt.Color(255, 255, 255));
         luzAlta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 luzAlta2ActionPerformed(evt);
@@ -177,7 +200,6 @@ public final class FrmCarro extends javax.swing.JFrame {
         });
         jPanel1.add(luzAlta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 90, 30));
 
-        luzAlta1.setBackground(new java.awt.Color(255, 255, 255));
         luzAlta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 luzAlta1ActionPerformed(evt);
@@ -295,17 +317,6 @@ public final class FrmCarro extends javax.swing.JFrame {
         txtKilometraje.setText("Kilometraje");
         jPanel1.add(txtKilometraje, new org.netbeans.lib.awtextra.AbsoluteConstraints(1155, 310, 80, -1));
 
-        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
-        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseExited(evt);
-            }
-        });
-        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
-
         ImagenDetras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Atras.jpg"))); // NOI18N
         ImagenDetras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -317,11 +328,152 @@ public final class FrmCarro extends javax.swing.JFrame {
         });
         jPanel1.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
+        btnAbr4.setBackground(new java.awt.Color(255, 0, 51));
+        btnAbr4.setText("Abr4");
+        btnAbr4.setOpaque(true);
+        btnAbr4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbr4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAbr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 200, 60, -1));
+
+        btnDes4.setText("Des4");
+        btnDes4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDes4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 150, 60, -1));
+
+        btnDes.setText("Des1");
+        btnDes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 100, 60, -1));
+
+        btnAbr.setBackground(new java.awt.Color(255, 0, 0));
+        btnAbr.setText("Abr1");
+        btnAbr.setOpaque(true);
+        btnAbr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAbr, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 40, -1, -1));
+
+        btnAbr2.setBackground(new java.awt.Color(255, 0, 0));
+        btnAbr2.setText("Abr2");
+        btnAbr2.setOpaque(true);
+        btnAbr2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbr2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAbr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 40, 60, -1));
+
+        btnDes2.setText("Des2");
+        btnDes2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDes2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 100, 60, -1));
+
+        btnDes3.setText("Des3");
+        btnDes3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDes3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 140, 60, -1));
+
+        btnAbr3.setBackground(new java.awt.Color(255, 0, 51));
+        btnAbr3.setText("Abr3");
+        btnAbr3.setOpaque(true);
+        btnAbr3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbr3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAbr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 200, 60, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
+
+        PalaApagado.setText("Apagado");
+        PalaApagado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PalaApagadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PalaApagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
+
+        PalaVelo1.setText("Velocidad 1");
+        PalaVelo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PalaVelo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PalaVelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
+
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 70, 30));
+
+        PalaVelo2.setText("Velocidad 2");
+        PalaVelo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PalaVelo2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PalaVelo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, -1, -1));
+
+        PalaVelo3.setText("Velocidad 3");
+        PalaVelo3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PalaVelo3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PalaVelo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, -1, -1));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 3, -1, 30));
+
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 240, -1, 30));
+
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 240, -1, 30));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
+
+        jpalabrisas.setBackground(new java.awt.Color(204, 204, 204));
+        jpalabrisas.setPreferredSize(new java.awt.Dimension(320, 75));
+        jPanel1.add(jpalabrisas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 320, 10));
+
+        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
+        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseExited(evt);
+            }
+        });
+        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -418,10 +570,10 @@ public final class FrmCarro extends javax.swing.JFrame {
     Timer Activo = new Timer(500, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(FrenoMano.isFrenoMano() || SensorDetras || SensorDelante){
+            if (FrenoMano.isFrenoMano() || SensorDetras || SensorDelante) {
                 ActivarSensor();
-                
-            }else{
+
+            } else {
                 DesactivarSensor();
             }
         }
@@ -532,6 +684,99 @@ public final class FrmCarro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PruebaActionPerformed
 
+    private void btnAbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrActionPerformed
+        asiento.abrochar(asiento.getConductor());
+        btnAbr.setBackground(Color.WHITE);
+        btnDes.setBackground(Color.CYAN);
+    }//GEN-LAST:event_btnAbrActionPerformed
+
+    private void btnAbr2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbr2ActionPerformed
+        asiento.abrochar(asiento.getCopiloto());
+        btnAbr2.setBackground(Color.WHITE);
+        btnDes2.setBackground(Color.CYAN);
+    }//GEN-LAST:event_btnAbr2ActionPerformed
+
+    private void btnAbr4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbr4ActionPerformed
+        asiento.abrochar(asiento.getPasagero2());
+        btnAbr4.setBackground(Color.WHITE);
+        btnDes4.setBackground(Color.CYAN);
+    }//GEN-LAST:event_btnAbr4ActionPerformed
+
+    private void btnDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesActionPerformed
+        asiento.desabrochar(asiento.getConductor());
+        btnAbr.setBackground(Color.RED);
+        btnDes.setBackground(Color.WHITE);
+    }//GEN-LAST:event_btnDesActionPerformed
+
+    private void btnDes2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDes2ActionPerformed
+        asiento.desabrochar(asiento.getCopiloto());
+        btnAbr2.setBackground(Color.RED);
+        btnDes2.setBackground(Color.WHITE);
+    }//GEN-LAST:event_btnDes2ActionPerformed
+
+    private void btnDes3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDes3ActionPerformed
+        asiento.desabrochar(asiento.getPasajero1());
+        btnAbr3.setBackground(Color.RED);
+        btnDes3.setBackground(Color.WHITE);
+    }//GEN-LAST:event_btnDes3ActionPerformed
+
+    private void btnDes4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDes4ActionPerformed
+        asiento.desabrochar(asiento.getPasagero2());
+        btnAbr4.setBackground(Color.RED);
+        btnDes4.setBackground(Color.WHITE);
+    }//GEN-LAST:event_btnDes4ActionPerformed
+
+    private void btnAbr3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbr3ActionPerformed
+        asiento.abrochar(asiento.getPasajero1());
+        btnAbr3.setBackground(Color.WHITE);
+        btnDes3.setBackground(Color.CYAN);
+    }//GEN-LAST:event_btnAbr3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void PalaVelo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalaVelo1ActionPerformed
+        tiempo = 1000;
+        PalaTimer.start();
+    }//GEN-LAST:event_PalaVelo1ActionPerformed
+
+    private void PalaApagadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalaApagadoActionPerformed
+        PalaTimer.stop();
+        jpalabrisas.setSize(320, 10);
+    }//GEN-LAST:event_PalaApagadoActionPerformed
+
+    private void PalaVelo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalaVelo2ActionPerformed
+        tiempo = 750;
+        PalaTimer.start();
+    }//GEN-LAST:event_PalaVelo2ActionPerformed
+
+    private void PalaVelo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalaVelo3ActionPerformed
+        tiempo = 500;
+        PalaTimer.start();
+    }//GEN-LAST:event_PalaVelo3ActionPerformed
+
+    Timer PalaTimer = new Timer(tiempo, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (motor.estaEncendido()) {
+                if (jpalabrisas.getHeight() == 10) {
+                    jpalabrisas.setSize(320, 75);
+                } else {
+                    jpalabrisas.setSize(320, 10);
+                }
+            }
+
+        }
+    });
     // // // // // // // 
     /**
      * @param args the command line arguments
@@ -563,12 +808,24 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JLabel ImagenDetras;
     private javax.swing.JTextField NoGas;
     private javax.swing.JTextField Numeracion;
+    private javax.swing.JButton PalaApagado;
+    private javax.swing.JButton PalaVelo1;
+    private javax.swing.JButton PalaVelo2;
+    private javax.swing.JButton PalaVelo3;
     private javax.swing.JTextField Prueba;
     private javax.swing.JProgressBar SeeGasolina;
     private javax.swing.JProgressBar SeeRPM;
     private javax.swing.JProgressBar SeeVelocimetro;
     private javax.swing.JTextField Sensor;
+    private javax.swing.JButton btnAbr;
+    private javax.swing.JButton btnAbr2;
+    private javax.swing.JButton btnAbr3;
+    private javax.swing.JButton btnAbr4;
     private javax.swing.JButton btnAcelerar;
+    private javax.swing.JButton btnDes;
+    private javax.swing.JButton btnDes2;
+    private javax.swing.JButton btnDes3;
+    private javax.swing.JButton btnDes4;
     private javax.swing.JButton btnEncenderApagar;
     private javax.swing.JButton btnFrenoDePieXD;
     private javax.swing.JButton btnFrenoMano;
@@ -579,12 +836,17 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton btnPuerta3;
     private javax.swing.JButton btnPuerta4;
     private javax.swing.JButton btnRecargar;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton jpalabrisas;
     private javax.swing.JButton luzAlta1;
     private javax.swing.JButton luzAlta2;
     private javax.swing.JButton luzBaja1;

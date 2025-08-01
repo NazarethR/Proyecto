@@ -46,11 +46,11 @@ public class Asientos {
         this.Pasagero2 = Pasagero2;
     }
 
-    public Asientos(Cinturon Conductor, Cinturon Copiloto, Cinturon Pasajero1, Cinturon Pasagero2) {
-        this.Conductor = Conductor;
-        this.Copiloto = Copiloto;
-        this.Pasajero1 = Pasajero1;
-        this.Pasagero2 = Pasagero2;
+    public Asientos() {
+        this.Conductor = new Cinturon();
+        this.Copiloto = new Cinturon();
+        this.Pasajero1 =  new Cinturon();
+        this.Pasagero2 =  new Cinturon();
     }
 
    public void abrochar(Cinturon e){
