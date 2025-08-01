@@ -50,7 +50,7 @@ public class Kilometraje {
     public Kilometraje() {
         this.velocidad = 0;
         this.Kilometraje = 0;
-        this.RPM = 0;
+        this.RPM = 800;
         this.EstadoMotor = new Motor();
     }
     

@@ -47,11 +47,11 @@ public class Radio {
         this.estacionFM = estacionFM;
     }
 
-    public Radio(Modos modo, EstacionesAM estacionAM, EstacionesFM estacionFM) {
+    public Radio(Modos modo) {
         this.estado = false;
         this.modo = modo;
-        this.estacionAM = estacionAM;
-        this.estacionFM = estacionFM;
+        this.estacionAM = EstacionesAM.RadioChorotega;
+        this.estacionFM = EstacionesFM.Radio947;
     }
 
     public void CambiarModo() {

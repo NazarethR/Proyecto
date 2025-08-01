@@ -74,9 +74,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        ImagenDetras = new javax.swing.JLabel();
         SeeVelocimetro = new javax.swing.JProgressBar();
-        jLabel5 = new javax.swing.JLabel();
         SeeRPM = new javax.swing.JProgressBar();
         Prueba = new javax.swing.JTextField();
         SeeGasolina = new javax.swing.JProgressBar();
@@ -86,7 +84,6 @@ public final class FrmCarro extends javax.swing.JFrame {
         btnRecargar = new javax.swing.JButton();
         luzAlta2 = new javax.swing.JButton();
         luzAlta1 = new javax.swing.JButton();
-        ImagenDeFrente = new javax.swing.JLabel();
         Sensor = new javax.swing.JTextField();
         btnEncenderApagar = new javax.swing.JButton();
         btnLuces = new javax.swing.JButton();
@@ -101,32 +98,25 @@ public final class FrmCarro extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        btnAcelerar = new javax.swing.JButton();
+        btnFrenoDePieXD = new javax.swing.JButton();
+        Numeracion = new javax.swing.JTextField();
+        txtKilometraje = new javax.swing.JTextField();
+        ImagenDeFrente = new javax.swing.JLabel();
+        ImagenDetras = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        prueba = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ImagenDetras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Atras.jpg"))); // NOI18N
-        ImagenDetras.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ImagenDetrasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ImagenDetrasMouseExited(evt);
-            }
-        });
-        jPanel1.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
-
         SeeVelocimetro.setBackground(new java.awt.Color(255, 255, 51));
         SeeVelocimetro.setOpaque(true);
         jPanel1.add(SeeVelocimetro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 440, 320, 30));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, -1, -1));
-
         SeeRPM.setBackground(new java.awt.Color(255, 51, 0));
+        SeeRPM.setMaximum(10);
         SeeRPM.setOrientation(1);
         SeeRPM.setOpaque(true);
         jPanel1.add(SeeRPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 360, 40, 110));
@@ -177,7 +167,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnRecargarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1540, 240, -1, -1));
+        jPanel1.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, -1, -1));
 
         luzAlta2.setBackground(new java.awt.Color(255, 255, 255));
         luzAlta2.addActionListener(new java.awt.event.ActionListener() {
@@ -195,23 +185,12 @@ public final class FrmCarro extends javax.swing.JFrame {
         });
         jPanel1.add(luzAlta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 30));
 
-        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
-        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ImagenDeFrenteMouseExited(evt);
-            }
-        });
-        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
-
         Sensor.setEditable(false);
         Sensor.setBackground(new java.awt.Color(255, 0, 0));
         Sensor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Sensor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Sensor.setText("¡SENSOR O FRENO ACTIVADO!");
-        jPanel1.add(Sensor, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 920, -1, 40));
+        jPanel1.add(Sensor, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, -1, 40));
 
         btnEncenderApagar.setText("Motor EncenderApagar");
         btnEncenderApagar.addActionListener(new java.awt.event.ActionListener() {
@@ -301,11 +280,48 @@ public final class FrmCarro extends javax.swing.JFrame {
         jTextField3.setText("RPM");
         jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 320, -1, -1));
 
+        btnAcelerar.setText("Acelerar");
+        jPanel1.add(btnAcelerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 750, -1, -1));
+
+        btnFrenoDePieXD.setText("Frenar/retroceder");
+        jPanel1.add(btnFrenoDePieXD, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 750, -1, -1));
+
+        Numeracion.setEditable(false);
+        Numeracion.setBackground(new java.awt.Color(0, 0, 0));
+        Numeracion.setText("0");
+        jPanel1.add(Numeracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 340, -1, -1));
+
+        txtKilometraje.setEditable(false);
+        txtKilometraje.setText("Kilometraje");
+        jPanel1.add(txtKilometraje, new org.netbeans.lib.awtextra.AbsoluteConstraints(1155, 310, 80, -1));
+
+        ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
+        ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImagenDeFrenteMouseExited(evt);
+            }
+        });
+        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+
+        ImagenDetras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Atras.jpg"))); // NOI18N
+        ImagenDetras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImagenDetrasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImagenDetrasMouseExited(evt);
+            }
+        });
+        jPanel1.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
-
-        prueba.setText("nada");
-        jPanel1.add(prueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 210, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -546,12 +562,15 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JLabel ImagenDeFrente;
     private javax.swing.JLabel ImagenDetras;
     private javax.swing.JTextField NoGas;
+    private javax.swing.JTextField Numeracion;
     private javax.swing.JTextField Prueba;
     private javax.swing.JProgressBar SeeGasolina;
     private javax.swing.JProgressBar SeeRPM;
     private javax.swing.JProgressBar SeeVelocimetro;
     private javax.swing.JTextField Sensor;
+    private javax.swing.JButton btnAcelerar;
     private javax.swing.JButton btnEncenderApagar;
+    private javax.swing.JButton btnFrenoDePieXD;
     private javax.swing.JButton btnFrenoMano;
     private javax.swing.JButton btnLuces;
     private javax.swing.JButton btnLucesIntermitentes;
@@ -572,7 +591,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton luzBaja2;
     private javax.swing.JButton luzIntermitente;
     private javax.swing.JButton luzPuertas;
-    private javax.swing.JTextField prueba;
+    private javax.swing.JTextField txtKilometraje;
     // End of variables declaration//GEN-END:variables
 
 }
