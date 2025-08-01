@@ -11,10 +11,18 @@ package SistemaDePuertas;
 public class Puertas {
 
     private boolean puertasAbiertas[];
+    private Puertas puerta;
 
     public Puertas() {
         this.puertasAbiertas = new boolean[4];
+        this.puerta = puerta;
     }
+
+    public Puertas getPuerta() {
+        return puerta;
+    }
+
+
 
     public void abierta(int vec) {
         if (vecValido(vec)) {
@@ -31,6 +39,10 @@ public class Puertas {
     public boolean laPuertaEstaAbierta(int vec) {
         return vecValido(vec) && puertasAbiertas[vec];
 
+    }
+
+    public boolean[] getPuertasAbiertas() {
+        return puertasAbiertas;
     }
 
 // con esta parte estoy devolviendo el estado de todas las puertas en una forma de texto 
