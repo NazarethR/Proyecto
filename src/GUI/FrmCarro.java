@@ -15,18 +15,18 @@ import SistemaIluminaciones.Luces;
  * @author duvan
  */
 public class FrmCarro extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCarro.class.getName());
-    
+
     Combustible Gasolina = new Combustible();
     Sensores FrenoMano = new Sensores();
     Motor motor = new Motor();
     Luces luces = new Luces();
-    
+
     private boolean SensorDelante;
     private boolean SensorDetras;
     private int cont;
-    
+
     private boolean puerta1Abierta = false;
     private boolean puerta2Abierta = false;
     private boolean puerta3Abierta = false;
@@ -39,20 +39,21 @@ public class FrmCarro extends javax.swing.JFrame {
         initComponents();
         SeeGasolina.setValue(Gasolina.ObtenerCantidad());
         Sensor.setVisible(false);
-        
+
         luzBaja1.setVisible(false);
         luzBaja2.setVisible(false);
         luzAlta1.setVisible(false);
         luzAlta2.setVisible(false);
-        
+        luzIntermitente.setVisible(false);
+
     }
-    
+
     public void ActivarSensor() {
         if (FrenoMano.isFrenoMano() && !this.SensorDelante && !this.SensorDetras) {
             Sensor.setVisible(true);
         }
     }
-    
+
     public void DesactivarSensor() {
         if (!FrenoMano.isFrenoMano() && this.SensorDelante && this.SensorDetras) {
             Sensor.setVisible(false);
@@ -333,26 +334,26 @@ public class FrmCarro extends javax.swing.JFrame {
         if (cont == 3 || cont == 0) {
             cont = 0;
             luces.luzApagadas();
-            
+
             luzBaja1.setVisible(false);
             luzBaja2.setVisible(false);
             luzAlta1.setVisible(false);
             luzAlta2.setVisible(false);
-            
+
         } else if (cont == 1 && motor.estaEncendido()) {
             luces.luzBajaEncendida();
             luzBaja1.setVisible(true);
             luzBaja2.setVisible(true);
-            
+
         } else if (cont == 2 && motor.estaEncendido()) {
             luzBaja1.setVisible(false);
             luzBaja2.setVisible(false);
-            
+
             luces.luzAltaEncendidas();
             luzAlta1.setVisible(true);
             luzAlta2.setVisible(true);
         }
-        
+
 
     }//GEN-LAST:event_btnLucesActionPerformed
 
@@ -365,11 +366,11 @@ public class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_luzBaja1ActionPerformed
 
     private void luzAlta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzAlta2ActionPerformed
-        
+
     }//GEN-LAST:event_luzAlta2ActionPerformed
 
     private void btnPuerta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuerta1ActionPerformed
-        
+
     }//GEN-LAST:event_btnPuerta1ActionPerformed
 
 // puertas
@@ -398,12 +399,17 @@ public class FrmCarro extends javax.swing.JFrame {
         cont++;
         if (cont == 0) {
             cont = 0;
-            
+
             luces.luzApagadas();
             luzIntermitente.setVisible(false);
+            
         } else if (cont == 1 && motor.estaEncendido()) {
             luces.intermitentesEncendidas();
             luzIntermitente.setVisible(true);
+            
+        } else if (cont == 2 && motor.estaEncendido()) {
+             luces.luzApagadas();
+            luzIntermitente.setVisible(false);
         }
     }//GEN-LAST:event_btnLucesIntermitentesActionPerformed
 
