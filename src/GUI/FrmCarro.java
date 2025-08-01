@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import Alarma_y_Bloqueo.AlarmaBloqueo;
 import Cinturones.Asientos;
 import Parabrisas.Palabrisas;
 import SistemaCombustible.Combustible;
@@ -41,6 +42,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     Climatizacion Clima = new Climatizacion();
     Kilometraje kilometraje = new Kilometraje();
     Puertas puerta = new Puertas();
+    AlarmaBloqueo alarma = new AlarmaBloqueo(luces);
 
     private boolean SensorDelante;
     private boolean SensorDetras;
@@ -75,7 +77,8 @@ public final class FrmCarro extends javax.swing.JFrame {
         Aire1.setVisible(false);
         Aire2.setVisible(false);
         luzIntermitente.setVisible(false);
-
+        
+        
     }
 
     public void ActivarSensor() {
@@ -139,12 +142,12 @@ public final class FrmCarro extends javax.swing.JFrame {
         btnAbr3 = new javax.swing.JButton();
         PalaApagado = new javax.swing.JButton();
         PalaVelo1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnPuertaBlo1 = new javax.swing.JButton();
         PalaVelo2 = new javax.swing.JButton();
         PalaVelo3 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnPuertaBlo2 = new javax.swing.JButton();
+        btnPuertaBlo4 = new javax.swing.JButton();
+        btnPuertaBlo3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jpalabrisas = new javax.swing.JButton();
         ImagenDeFrente = new javax.swing.JLabel();
@@ -165,6 +168,7 @@ public final class FrmCarro extends javax.swing.JFrame {
         bntdesactivar3 = new javax.swing.JButton();
         bntdesactivar4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnAlarmaBlo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -479,12 +483,12 @@ public final class FrmCarro extends javax.swing.JFrame {
         });
         Panel.add(PalaVelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
 
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnPuertaBlo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnPuertaBlo1ActionPerformed(evt);
             }
         });
-        Panel.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 70, 30));
+        Panel.add(btnPuertaBlo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 70, 30));
 
         PalaVelo2.setText("Velocidad 2");
         PalaVelo2.addActionListener(new java.awt.event.ActionListener() {
@@ -501,21 +505,21 @@ public final class FrmCarro extends javax.swing.JFrame {
             }
         });
         Panel.add(PalaVelo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, -1, -1));
-        Panel.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 3, -1, 30));
+        Panel.add(btnPuertaBlo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 3, -1, 30));
 
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnPuertaBlo4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnPuertaBlo4ActionPerformed(evt);
             }
         });
-        Panel.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 240, -1, 30));
+        Panel.add(btnPuertaBlo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 240, -1, 30));
 
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnPuertaBlo3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnPuertaBlo3ActionPerformed(evt);
             }
         });
-        Panel.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 240, -1, 30));
+        Panel.add(btnPuertaBlo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 240, -1, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
         Panel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
@@ -649,6 +653,14 @@ public final class FrmCarro extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LadoIzquierdo.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         Panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 570, -1));
+
+        btnAlarmaBlo.setText("AlarmaBlo");
+        btnAlarmaBlo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlarmaBloActionPerformed(evt);
+            }
+        });
+        Panel.add(btnAlarmaBlo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 80, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -920,17 +932,17 @@ public final class FrmCarro extends javax.swing.JFrame {
         btnDes3.setBackground(Color.CYAN);
     }//GEN-LAST:event_btnAbr3ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnPuertaBlo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuertaBlo1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnPuertaBlo1ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnPuertaBlo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuertaBlo3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnPuertaBlo3ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnPuertaBlo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuertaBlo4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnPuertaBlo4ActionPerformed
 
     private void PalaVelo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalaVelo1ActionPerformed
         tiempo = 1000;
@@ -1064,7 +1076,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFrenoDePieXDKeyTyped
 
     private void bntdesactivar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntdesactivar2ActionPerformed
-              if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
+        if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
             bntdesactivar2.setBackground(Color.BLACK);
         } else {
             bntdesactivar2.setBackground(Color.WHITE);
@@ -1072,7 +1084,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_bntdesactivar2ActionPerformed
 
     private void bntdesactivar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntdesactivar3ActionPerformed
-               if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
+        if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
             bntdesactivar3.setBackground(Color.BLACK);
         } else {
             bntdesactivar3.setBackground(Color.WHITE);
@@ -1080,12 +1092,45 @@ public final class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_bntdesactivar3ActionPerformed
 
     private void bntdesactivar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntdesactivar4ActionPerformed
-               if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
+        if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
             bntdesactivar4.setBackground(Color.BLACK);
         } else {
             bntdesactivar4.setBackground(Color.WHITE);
         }
     }//GEN-LAST:event_bntdesactivar4ActionPerformed
+
+    private void btnAlarmaBloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlarmaBloActionPerformed
+        if (btnPuertaBlo1.getBackground() == Color.BLACK) {
+            btnPuertaBlo1.setBackground(Color.WHITE);
+            btnPuertaBlo2.setBackground(Color.WHITE);
+            btnPuertaBlo3.setBackground(Color.WHITE);
+            btnPuertaBlo4.setBackground(Color.WHITE);
+        }else if(btnPuertaBlo1.getBackground() != Color.BLACK){
+            btnPuertaBlo1.setBackground(Color.BLACK);
+            btnPuertaBlo2.setBackground(Color.BLACK);
+            btnPuertaBlo3.setBackground(Color.BLACK);
+            btnPuertaBlo4.setBackground(Color.BLACK);
+            for (int i = 0; i < 6; i++) {
+                try {
+                    alarma.getLucesAlarma().luzAltaEncendidas();
+                    alarma.getLucesAlarma().lucesFrenoEncendidas();
+                    luzAlta1.setVisible(true);
+                    luzAlta2.setVisible(true);
+                    LuzTrasera1.setVisible(true);
+                    Luztrasera2.setVisible(true);
+                    Thread.sleep(1500);
+                    luzAlta1.setVisible(false);
+                    luzAlta2.setVisible(false);
+                    LuzTrasera1.setVisible(false);
+                    Luztrasera2.setVisible(false);
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    System.getLogger(FrmCarro.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                }
+        }
+
+    }//GEN-LAST:event_btnAlarmaBloActionPerformed
 
     Timer PalaTimer = new Timer(tiempo, new ActionListener() {
         @Override
@@ -1164,6 +1209,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton btnAbr3;
     private javax.swing.JButton btnAbr4;
     private javax.swing.JButton btnAcelerar;
+    private javax.swing.JButton btnAlarmaBlo;
     private javax.swing.JButton btnCalefaccion;
     private javax.swing.JButton btnDes;
     private javax.swing.JButton btnDes2;
@@ -1178,11 +1224,11 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton btnPuerta1;
     private javax.swing.JButton btnPuerta2;
     private javax.swing.JButton btnPuerta4;
+    private javax.swing.JButton btnPuertaBlo1;
+    private javax.swing.JButton btnPuertaBlo2;
+    private javax.swing.JButton btnPuertaBlo3;
+    private javax.swing.JButton btnPuertaBlo4;
     private javax.swing.JButton btnRecargar;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
