@@ -29,7 +29,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private boolean SensorDelante;
     private boolean SensorDetras;
     private int cont;
-    
+
     private boolean esperar;
     private boolean puerta1Abierta = false;
     private boolean puerta2Abierta = false;
@@ -42,29 +42,26 @@ public final class FrmCarro extends javax.swing.JFrame {
     public FrmCarro() {
         initComponents();
         timer.start();
-        
+        Activo.start();
+
         NoGas.setVisible(false);
-        
+
         Sensor.setVisible(false);
-        
+
         luzBaja1.setVisible(false);
         luzBaja2.setVisible(false);
         luzAlta1.setVisible(false);
         luzAlta2.setVisible(false);
         luzIntermitente.setVisible(false);
-        
+
     }
 
     public void ActivarSensor() {
-        if (FrenoMano.isFrenoMano() && !this.SensorDelante && !this.SensorDetras) {
-            Sensor.setVisible(true);
-        }
+             Sensor.setVisible(true);
     }
 
     public void DesactivarSensor() {
-        if (!FrenoMano.isFrenoMano() && this.SensorDelante && this.SensorDetras) {
             Sensor.setVisible(false);
-        }
     }
 
     /**
@@ -105,6 +102,7 @@ public final class FrmCarro extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        prueba = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -306,6 +304,9 @@ public final class FrmCarro extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
 
+        prueba.setText("nada");
+        jPanel1.add(prueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 210, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -338,10 +339,17 @@ public final class FrmCarro extends javax.swing.JFrame {
                 SeeGasolina.setValue(Gasolina.ObtenerCantidad());
                 Prueba.setText(String.valueOf(Gasolina.ObtenerCantidad()));
             }
-            if(Gasolina.ObtenerCantidad()==0){
+            if (!motor.estaEncendido()) {
+                luzBaja1.setVisible(false);
+                luzBaja2.setVisible(false);
+                luzAlta1.setVisible(false);
+                luzAlta2.setVisible(false);
+                cont = 0;
+            }
+            if (Gasolina.ObtenerCantidad() == 0) {
                 timer.stop();
                 espera.start();
-                esperar =true;
+                esperar = true;
                 NoGas.setVisible(false);
             }
         }
@@ -349,23 +357,28 @@ public final class FrmCarro extends javax.swing.JFrame {
     Timer espera = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(Gasolina.ObtenerCantidad()!=0 && esperar){
+            if (Gasolina.ObtenerCantidad() != 0 && esperar) {
                 timer.start();
                 espera.stop();
-                esperar=false;
+                esperar = false;
                 NoGas.setVisible(true);
+            }
+            if (!motor.estaEncendido()) {
+                luzBaja1.setVisible(false);
+                luzBaja2.setVisible(false);
+                luzAlta1.setVisible(false);
+                luzAlta2.setVisible(false);
+                cont = 0;
             }
         }
     });
-    
+
 
     private void ImagenDetrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDetrasMouseEntered
-        ActivarSensor();
         this.SensorDetras = true;
     }//GEN-LAST:event_ImagenDetrasMouseEntered
 
     private void ImagenDeFrenteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDeFrenteMouseEntered
-        ActivarSensor();
         this.SensorDelante = true;
     }//GEN-LAST:event_ImagenDeFrenteMouseEntered
 
@@ -380,15 +393,23 @@ public final class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFrenoManoActionPerformed
 
     private void ImagenDeFrenteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDeFrenteMouseExited
-        DesactivarSensor();
-        this.SensorDelante = true;
+        this.SensorDelante = false;
     }//GEN-LAST:event_ImagenDeFrenteMouseExited
 
     private void ImagenDetrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenDetrasMouseExited
-        DesactivarSensor();
-        this.SensorDetras = true;
+        this.SensorDetras = false;
     }//GEN-LAST:event_ImagenDetrasMouseExited
-
+    Timer Activo = new Timer(500, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(FrenoMano.isFrenoMano() || SensorDetras || SensorDelante){
+                ActivarSensor();
+                
+            }else{
+                DesactivarSensor();
+            }
+        }
+    });
     private void btnEncenderApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncenderApagarActionPerformed
         if (Gasolina.ObtenerCantidad() != 0) {
             if (motor.estaEncendido()) {
@@ -402,7 +423,9 @@ public final class FrmCarro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEncenderApagarActionPerformed
 
     private void btnLucesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLucesActionPerformed
-        cont++;
+        if (motor.estaEncendido()) {
+            cont++;
+        }
         if (cont == 3 || cont == 0) {
             cont = 0;
             luces.luzApagadas();
@@ -549,6 +572,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton luzBaja2;
     private javax.swing.JButton luzIntermitente;
     private javax.swing.JButton luzPuertas;
+    private javax.swing.JTextField prueba;
     // End of variables declaration//GEN-END:variables
 
 }
