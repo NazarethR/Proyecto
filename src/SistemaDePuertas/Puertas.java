@@ -32,6 +32,9 @@ public class Puertas {
         return vecValido(vec) && puertasAbiertas[vec];
 
     }
+    
+   
+            
 
 // con esta parte estoy devolviendo el estado de todas las puertas en una forma de texto 
     public String estadoDeTodasLasPuertas() {

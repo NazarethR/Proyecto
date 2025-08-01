@@ -4,6 +4,7 @@
  */
 package SistemaIluminaciones;
 
+import SistemaDePuertas.Puertas;
 import SistemaEncendido.Motor;
 
 /**
@@ -14,10 +15,13 @@ public class Luces {
 
     private TemaDeLuces actuales;
     private Motor motor;
+    private Puertas puertas;
 
     public Luces() {
         this.actuales = TemaDeLuces.APAGADO;
         this.motor = new Motor();
+        this.puertas = new Puertas();
+
     }
 
     private boolean puedeEncenderLuces() {
@@ -67,6 +71,19 @@ public class Luces {
 
     public TemaDeLuces getActuales() {
         return actuales;
+    }
+
+    public void luzPuertaAbierta() {
+        actuales = TemaDeLuces.LUZ_PUERTA_ABIERTA;
+    }
+
+    public void luzAdvertenciaPuerta() {
+        for (int i = 0; i < 4; i++) {
+            if (puertas.laPuertaEstaAbierta(i)) {
+                actuales = TemaDeLuces.LUZ_PUERTA_ABIERTA;
+                return;
+            }
+        }
     }
 
 }
