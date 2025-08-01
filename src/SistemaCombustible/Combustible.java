@@ -10,39 +10,46 @@ import SistemaEncendido.Motor;
  * @author duvan
  */
 public class Combustible {
-    private double Cantidad;
-    private double Consumo;
+    private int Cantidad;
+    private int Consumo;
+    private Motor motorEstado;
 
-    public double getCantidad() {
+    public int getCantidad() {
         return Cantidad;
     }
 
-    public void setCantidad(double Cantidad) {
-        this.Cantidad = Cantidad;
-    }
-
-    public double getConsumo() {
+    public int getConsumo() {
         return Consumo;
     }
 
-    public void setConsumo(double Consumo) {
+    public Motor getMotorEstado() {
+        return motorEstado;
+    }
+
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
+    }
+
+    public void setConsumo(int Consumo) {
         this.Consumo = Consumo;
     }
 
     public Combustible() {
         this.Cantidad = 100;
-        this.Consumo = 0.23;
+        this.Consumo = 1;
+        this.motorEstado = new Motor();
+    }
+
+    public int RecargarGasolina(){
+        return 100;
     }
     
-    public void RecargarGasolina(){
-        Cantidad=100;
-    }
-    
-    public double ObtenerCantidad(){
+    public int ObtenerCantidad(){
         return Cantidad;
     }
     
     public void GastarGasolina(){
+        if(motorEstado.estaEncendido())
         Cantidad=Cantidad - Consumo;
     }
 }
