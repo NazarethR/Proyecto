@@ -15,22 +15,22 @@ import SistemaIluminaciones.Luces;
  * @author duvan
  */
 public class FrmCarro extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCarro.class.getName());
-
+    
     Combustible Gasolina = new Combustible();
     Sensores FrenoMano = new Sensores();
     Motor motor = new Motor();
     Luces luces = new Luces();
-
+    
     private boolean SensorDelante;
     private boolean SensorDetras;
     private int cont;
     
     private boolean puerta1Abierta = false;
-private boolean puerta2Abierta = false;
-private boolean puerta3Abierta = false;
-private boolean puerta4Abierta = false;
+    private boolean puerta2Abierta = false;
+    private boolean puerta3Abierta = false;
+    private boolean puerta4Abierta = false;
 
     /**
      * Creates new form FrmCarro
@@ -39,20 +39,20 @@ private boolean puerta4Abierta = false;
         initComponents();
         SeeGasolina.setValue(Gasolina.ObtenerCantidad());
         Sensor.setVisible(false);
-
+        
         luzBaja1.setVisible(false);
         luzBaja2.setVisible(false);
         luzAlta1.setVisible(false);
         luzAlta2.setVisible(false);
-
+        
     }
-
+    
     public void ActivarSensor() {
         if (FrenoMano.isFrenoMano() && !this.SensorDelante && !this.SensorDetras) {
             Sensor.setVisible(true);
         }
     }
-
+    
     public void DesactivarSensor() {
         if (!FrenoMano.isFrenoMano() && this.SensorDelante && this.SensorDetras) {
             Sensor.setVisible(false);
@@ -90,6 +90,8 @@ private boolean puerta4Abierta = false;
         btnPuerta3 = new javax.swing.JButton();
         btnPuerta4 = new javax.swing.JButton();
         luzPuertas = new javax.swing.JButton();
+        btnLucesIntermitentes = new javax.swing.JButton();
+        luzIntermitente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,6 +170,11 @@ private boolean puerta4Abierta = false;
         jPanel1.add(luzAlta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 90, 30));
 
         luzAlta1.setBackground(new java.awt.Color(255, 255, 255));
+        luzAlta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                luzAlta1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(luzAlta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 30));
 
         ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
@@ -245,6 +252,18 @@ private boolean puerta4Abierta = false;
         });
         jPanel1.add(luzPuertas, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 780, 100, 110));
 
+        btnLucesIntermitentes.setText("Intermitentes");
+        btnLucesIntermitentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLucesIntermitentesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLucesIntermitentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, -1, -1));
+
+        luzIntermitente.setBackground(new java.awt.Color(255, 102, 102));
+        luzIntermitente.setText("luz de las intermitentes");
+        jPanel1.add(luzIntermitente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -314,17 +333,17 @@ private boolean puerta4Abierta = false;
         if (cont == 3 || cont == 0) {
             cont = 0;
             luces.luzApagadas();
-
+            
             luzBaja1.setVisible(false);
             luzBaja2.setVisible(false);
             luzAlta1.setVisible(false);
             luzAlta2.setVisible(false);
-
+            
         } else if (cont == 1 && motor.estaEncendido()) {
             luces.luzBajaEncendida();
             luzBaja1.setVisible(true);
             luzBaja2.setVisible(true);
-
+            
         } else if (cont == 2 && motor.estaEncendido()) {
             luzBaja1.setVisible(false);
             luzBaja2.setVisible(false);
@@ -333,7 +352,7 @@ private boolean puerta4Abierta = false;
             luzAlta1.setVisible(true);
             luzAlta2.setVisible(true);
         }
-
+        
 
     }//GEN-LAST:event_btnLucesActionPerformed
 
@@ -346,21 +365,21 @@ private boolean puerta4Abierta = false;
     }//GEN-LAST:event_luzBaja1ActionPerformed
 
     private void luzAlta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzAlta2ActionPerformed
-     
+        
     }//GEN-LAST:event_luzAlta2ActionPerformed
 
     private void btnPuerta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuerta1ActionPerformed
-     
+        
     }//GEN-LAST:event_btnPuerta1ActionPerformed
-    
+
 // puertas
-    
+
     private void luzPuertasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzPuertasActionPerformed
-       if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta){
-           luzPuertas.setBackground(Color.BLACK);
-       }else {
+        if (puerta1Abierta || puerta2Abierta || puerta3Abierta || puerta4Abierta) {
+            luzPuertas.setBackground(Color.BLACK);
+        } else {
             luzPuertas.setBackground(Color.WHITE);
-       }
+        }
     }//GEN-LAST:event_luzPuertasActionPerformed
 
     private void btnPuerta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuerta2ActionPerformed
@@ -374,6 +393,23 @@ private boolean puerta4Abierta = false;
     private void btnPuerta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuerta4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPuerta4ActionPerformed
+
+    private void btnLucesIntermitentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLucesIntermitentesActionPerformed
+        cont++;
+        if (cont == 0) {
+            cont = 0;
+            
+            luces.luzApagadas();
+            luzIntermitente.setVisible(false);
+        } else if (cont == 1 && motor.estaEncendido()) {
+            luces.intermitentesEncendidas();
+            luzIntermitente.setVisible(true);
+        }
+    }//GEN-LAST:event_btnLucesIntermitentesActionPerformed
+
+    private void luzAlta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luzAlta1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_luzAlta1ActionPerformed
 
     // // // // // // // 
     /**
@@ -411,6 +447,7 @@ private boolean puerta4Abierta = false;
     private javax.swing.JButton btnEncenderApagar;
     private javax.swing.JButton btnFrenoMano;
     private javax.swing.JButton btnLuces;
+    private javax.swing.JButton btnLucesIntermitentes;
     private javax.swing.JButton btnPuerta1;
     private javax.swing.JButton btnPuerta2;
     private javax.swing.JButton btnPuerta3;
@@ -423,6 +460,7 @@ private boolean puerta4Abierta = false;
     private javax.swing.JButton luzAlta2;
     private javax.swing.JButton luzBaja1;
     private javax.swing.JButton luzBaja2;
+    private javax.swing.JButton luzIntermitente;
     private javax.swing.JButton luzPuertas;
     // End of variables declaration//GEN-END:variables
 
