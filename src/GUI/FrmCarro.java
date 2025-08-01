@@ -37,8 +37,8 @@ public final class FrmCarro extends javax.swing.JFrame {
     Asientos asiento = new Asientos();
     Palabrisas palabrisas = new Palabrisas(motor);
     Radio radios = new Radio(Modos.BLUETOOTH);
-    Climatizacion Clima =new Climatizacion();
-    Kilometraje kilometraje =new Kilometraje();
+    Climatizacion Clima = new Climatizacion();
+    Kilometraje kilometraje = new Kilometraje();
 
     private boolean SensorDelante;
     private boolean SensorDetras;
@@ -64,6 +64,8 @@ public final class FrmCarro extends javax.swing.JFrame {
 
         Sensor.setVisible(false);
 
+        LuzTrasera1.setVisible(false);
+        Luztrasera2.setVisible(false);
         luzBaja1.setVisible(false);
         luzBaja2.setVisible(false);
         luzAlta1.setVisible(false);
@@ -116,8 +118,10 @@ public final class FrmCarro extends javax.swing.JFrame {
         luzIntermitente = new javax.swing.JButton();
         NoGas = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
+        LuzTrasera1 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        Luztrasera2 = new javax.swing.JButton();
         btnAcelerar = new javax.swing.JButton();
         btnFrenoDePieXD = new javax.swing.JButton();
         Numeracion = new javax.swing.JTextField();
@@ -325,6 +329,9 @@ public final class FrmCarro extends javax.swing.JFrame {
         jTextField1.setText("Gasolina");
         Panel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 330, -1, -1));
 
+        LuzTrasera1.setBackground(new java.awt.Color(255, 0, 0));
+        Panel.add(LuzTrasera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, 30));
+
         jTextField2.setEditable(false);
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -336,6 +343,9 @@ public final class FrmCarro extends javax.swing.JFrame {
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setText("RPM");
         Panel.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 320, -1, -1));
+
+        Luztrasera2.setBackground(new java.awt.Color(255, 0, 0));
+        Panel.add(Luztrasera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 130, 30));
 
         btnAcelerar.setText("Acelerar");
         btnAcelerar.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
@@ -631,9 +641,11 @@ public final class FrmCarro extends javax.swing.JFrame {
                 Prueba.setText(String.valueOf(Gasolina.ObtenerCantidad()));
                 kilometraje.AumentarKilometraje();
                 Numeracion.setText(String.valueOf(kilometraje.getKilometraje()));
-                SeeRPM.setValue(kilometraje.getRPM()/1000);
-                NumRPM.setText(String.valueOf(kilometraje.getRPM()/1000));
-                NumVelocimetro.setText(String.valueOf(kilometraje.getVelocidad())+" Km/h");
+                SeeRPM.setValue(kilometraje.getRPM() / 1000);
+                NumRPM.setText(String.valueOf(kilometraje.getRPM() / 1000));
+                NumVelocimetro.setText(String.valueOf(kilometraje.getVelocidad()) + " Km/h");
+                LuzTrasera1.setVisible(false);
+                Luztrasera2.setVisible(false);
             }
             if (!motor.estaEncendido()) {
                 luzBaja1.setVisible(false);
@@ -946,7 +958,7 @@ public final class FrmCarro extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEncendidoActionPerformed
-    
+
     private void BtnCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambioActionPerformed
         if (motor.estaEncendido()) {
             if (Clima.getVentiladoraVel().BAJA == Clima.getVentiladoraVel()) {
@@ -962,46 +974,47 @@ public final class FrmCarro extends javax.swing.JFrame {
 
     private void btnCalefaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalefaccionActionPerformed
         if (motor.estaEncendido()) {
-            if(Clima.isCalefaccion()){
+            if (Clima.isCalefaccion()) {
                 Clima.ApagarCalefaccion();
                 Aire1.setBackground(Color.LIGHT_GRAY);
                 Aire2.setBackground(Color.LIGHT_GRAY);
-            }else{
+            } else {
                 Clima.EncenderCalefaccion();
                 Aire1.setBackground(Color.ORANGE);
                 Aire2.setBackground(Color.ORANGE);
             }
-            
+
         }
     }//GEN-LAST:event_btnCalefaccionActionPerformed
 
     private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
         if (motor.estaEncendido()) {
-            if(Clima.isAC()){
+            if (Clima.isAC()) {
                 Clima.ApagarAC();
                 Aire1.setBackground(Color.LIGHT_GRAY);
                 Aire2.setBackground(Color.LIGHT_GRAY);
-            }else{
+            } else {
                 Clima.EncenderAC();
                 Aire1.setBackground(Color.CYAN);
                 Aire2.setBackground(Color.CYAN);
             }
-            
+
         }
     }//GEN-LAST:event_btnACActionPerformed
 
     private void btnAcelerarMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_btnAcelerarMouseWheelMoved
         kilometraje.Acelerar();
         SeeVelocimetro.setValue(kilometraje.getVelocidad());
-        SeeRPM.setValue(kilometraje.getRPM()/1000);
+        SeeRPM.setValue(kilometraje.getRPM() / 1000);
     }//GEN-LAST:event_btnAcelerarMouseWheelMoved
 
     private void btnFrenoDePieXDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFrenoDePieXDKeyTyped
         kilometraje.Frenar();
         SeeVelocimetro.setValue(kilometraje.getVelocidad());
+        LuzTrasera1.setVisible(true);
+        Luztrasera2.setVisible(true);
     }//GEN-LAST:event_btnFrenoDePieXDKeyTyped
 
-    
     Timer PalaTimer = new Timer(tiempo, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1050,6 +1063,8 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton Encendido;
     private javax.swing.JLabel ImagenDeFrente;
     private javax.swing.JLabel ImagenDetras;
+    private javax.swing.JButton LuzTrasera1;
+    private javax.swing.JButton Luztrasera2;
     private javax.swing.JTextField NoGas;
     private javax.swing.JTextField NumRPM;
     private javax.swing.JTextField NumVelocimetro;
