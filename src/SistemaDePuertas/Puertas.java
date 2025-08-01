@@ -32,9 +32,6 @@ public class Puertas {
         return vecValido(vec) && puertasAbiertas[vec];
 
     }
-    
-   
-            
 
 // con esta parte estoy devolviendo el estado de todas las puertas en una forma de texto 
     public String estadoDeTodasLasPuertas() {
@@ -49,7 +46,7 @@ public class Puertas {
     private boolean vecValido(int vec) {
         return vec >= 0 && vec < puertasAbiertas.length;
     }
-    
+
     //El append este es parte de la clase StringBuilder / este me sirve para agregar texto al final de la cadena existente de mejor forma 
     //StringBuilder me  permite construir cadenas de texto sin crear nuevas instancias en cada paso, y el método
     // .append()   /  este lo estoy usando para  q el me vaya agregando partes 
