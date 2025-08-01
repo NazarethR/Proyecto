@@ -13,8 +13,14 @@ import SistemaEncendido.Motor;
 import SistemaIluminaciones.Luces;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.Timer;
+import SistemaRadio.EstacionesAM;
+import SistemaRadio.EstacionesFM;
+import SistemaRadio.Modos;
+import SistemaRadio.Radio;
+import ControlKilometraje.Kilometraje;
+import SistemaClimatizacion.Climatizacion;
+import SistemaClimatizacion.VelocidadVen;
 
 /**
  *
@@ -30,11 +36,15 @@ public final class FrmCarro extends javax.swing.JFrame {
     Luces luces = new Luces();
     Asientos asiento = new Asientos();
     Palabrisas palabrisas = new Palabrisas(motor);
+    Radio radios = new Radio(Modos.BLUETOOTH);
+    Climatizacion Clima =new Climatizacion();
+    Kilometraje kilometraje =new Kilometraje();
 
     private boolean SensorDelante;
     private boolean SensorDetras;
     private int cont;
     private int tiempo;
+    private int siguiente;
 
     private boolean esperar;
     private boolean puerta1Abierta = false;
@@ -49,7 +59,7 @@ public final class FrmCarro extends javax.swing.JFrame {
         initComponents();
         timer.start();
         Activo.start();
-        
+
         NoGas.setVisible(false);
 
         Sensor.setVisible(false);
@@ -58,6 +68,8 @@ public final class FrmCarro extends javax.swing.JFrame {
         luzBaja2.setVisible(false);
         luzAlta1.setVisible(false);
         luzAlta2.setVisible(false);
+        Aire1.setVisible(false);
+        Aire2.setVisible(false);
         luzIntermitente.setVisible(false);
 
     }
@@ -79,8 +91,10 @@ public final class FrmCarro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        Panel = new javax.swing.JPanel();
         SeeVelocimetro = new javax.swing.JProgressBar();
+        NumVelocimetro = new javax.swing.JTextField();
+        NumRPM = new javax.swing.JTextField();
         SeeRPM = new javax.swing.JProgressBar();
         Prueba = new javax.swing.JTextField();
         SeeGasolina = new javax.swing.JProgressBar();
@@ -117,7 +131,6 @@ public final class FrmCarro extends javax.swing.JFrame {
         btnDes2 = new javax.swing.JButton();
         btnDes3 = new javax.swing.JButton();
         btnAbr3 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         PalaApagado = new javax.swing.JButton();
         PalaVelo1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -129,21 +142,43 @@ public final class FrmCarro extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jpalabrisas = new javax.swing.JButton();
         ImagenDeFrente = new javax.swing.JLabel();
+        BoxModo = new javax.swing.JComboBox<>();
+        RadioNombre = new javax.swing.JTextField();
+        Siguiente = new javax.swing.JButton();
+        Encendido = new javax.swing.JButton();
+        jSpinner1 = new javax.swing.JSpinner();
+        btnEncendido = new javax.swing.JButton();
+        BtnCambio = new javax.swing.JButton();
+        Aire1 = new javax.swing.JButton();
+        Aire2 = new javax.swing.JButton();
+        btnCalefaccion = new javax.swing.JButton();
+        btnAC = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Panel.setOpaque(false);
+        Panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         SeeVelocimetro.setBackground(new java.awt.Color(255, 255, 51));
+        SeeVelocimetro.setMaximum(180);
         SeeVelocimetro.setOpaque(true);
-        jPanel1.add(SeeVelocimetro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 440, 320, 30));
+        Panel.add(SeeVelocimetro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 440, 320, 30));
+
+        NumVelocimetro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NumVelocimetro.setText("0");
+        NumVelocimetro.setOpaque(true);
+        Panel.add(NumVelocimetro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 470, 80, -1));
+
+        NumRPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NumRPM.setText("0");
+        Panel.add(NumRPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 400, 80, -1));
 
         SeeRPM.setBackground(new java.awt.Color(255, 51, 0));
         SeeRPM.setMaximum(10);
         SeeRPM.setOrientation(1);
         SeeRPM.setOpaque(true);
-        jPanel1.add(SeeRPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 360, 40, 110));
+        Panel.add(SeeRPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 360, 40, 110));
 
         Prueba.setEditable(false);
         Prueba.addActionListener(new java.awt.event.ActionListener() {
@@ -151,13 +186,13 @@ public final class FrmCarro extends javax.swing.JFrame {
                 PruebaActionPerformed(evt);
             }
         });
-        jPanel1.add(Prueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 470, 60, 40));
+        Panel.add(Prueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 470, 60, 40));
 
         SeeGasolina.setBackground(new java.awt.Color(204, 204, 0));
         SeeGasolina.setForeground(new java.awt.Color(204, 204, 0));
         SeeGasolina.setOrientation(1);
         SeeGasolina.setOpaque(true);
-        jPanel1.add(SeeGasolina, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 60, 110));
+        Panel.add(SeeGasolina, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 60, 110));
 
         btnFrenoMano.setBackground(new java.awt.Color(0, 0, 0));
         btnFrenoMano.setForeground(new java.awt.Color(0, 255, 0));
@@ -167,7 +202,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnFrenoManoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnFrenoMano, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 910, 150, 20));
+        Panel.add(btnFrenoMano, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 910, 150, 20));
 
         luzBaja2.setBackground(new java.awt.Color(153, 153, 0));
         luzBaja2.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +210,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 luzBaja2ActionPerformed(evt);
             }
         });
-        jPanel1.add(luzBaja2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, 20, 20));
+        Panel.add(luzBaja2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, 20, 20));
 
         luzBaja1.setBackground(new java.awt.Color(153, 153, 0));
         luzBaja1.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +218,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 luzBaja1ActionPerformed(evt);
             }
         });
-        jPanel1.add(luzBaja1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 560, 20, 20));
+        Panel.add(luzBaja1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 560, 20, 20));
 
         btnRecargar.setText("Recargar Gasolina");
         btnRecargar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,28 +226,28 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnRecargarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, -1, -1));
+        Panel.add(btnRecargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, -1, -1));
 
         luzAlta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 luzAlta2ActionPerformed(evt);
             }
         });
-        jPanel1.add(luzAlta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 90, 30));
+        Panel.add(luzAlta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 90, 30));
 
         luzAlta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 luzAlta1ActionPerformed(evt);
             }
         });
-        jPanel1.add(luzAlta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 30));
+        Panel.add(luzAlta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 30));
 
         Sensor.setEditable(false);
         Sensor.setBackground(new java.awt.Color(255, 0, 0));
         Sensor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Sensor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Sensor.setText("¡SENSOR O FRENO ACTIVADO!");
-        jPanel1.add(Sensor, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, -1, 40));
+        Panel.add(Sensor, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, -1, 40));
 
         btnEncenderApagar.setText("Motor EncenderApagar");
         btnEncenderApagar.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +255,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnEncenderApagarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEncenderApagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
+        Panel.add(btnEncenderApagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
 
         btnLuces.setText("Luces bajas,altas");
         btnLuces.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +263,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnLucesActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLuces, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, -1, -1));
+        Panel.add(btnLuces, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, -1, -1));
 
         btnPuerta1.setText("Puerta1");
         btnPuerta1.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +271,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnPuerta1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPuerta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, -1, -1));
+        Panel.add(btnPuerta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, -1, -1));
 
         btnPuerta2.setText("Puerta2");
         btnPuerta2.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +279,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnPuerta2ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPuerta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 710, -1, -1));
+        Panel.add(btnPuerta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 710, -1, -1));
 
         btnPuerta3.setText("Puerta3");
         btnPuerta3.addActionListener(new java.awt.event.ActionListener() {
@@ -252,7 +287,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnPuerta3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPuerta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 710, -1, -1));
+        Panel.add(btnPuerta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 710, -1, -1));
 
         btnPuerta4.setText("Puerta4");
         btnPuerta4.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +295,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnPuerta4ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPuerta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 710, -1, -1));
+        Panel.add(btnPuerta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 710, -1, -1));
 
         luzPuertas.setBackground(new java.awt.Color(0, 0, 0));
         luzPuertas.setText("jButton5");
@@ -269,7 +304,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 luzPuertasActionPerformed(evt);
             }
         });
-        jPanel1.add(luzPuertas, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 780, 100, 110));
+        Panel.add(luzPuertas, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 780, 100, 110));
 
         btnLucesIntermitentes.setText("Intermitentes");
         btnLucesIntermitentes.addActionListener(new java.awt.event.ActionListener() {
@@ -277,45 +312,56 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnLucesIntermitentesActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLucesIntermitentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, -1, -1));
+        Panel.add(btnLucesIntermitentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, -1, -1));
 
         luzIntermitente.setBackground(new java.awt.Color(255, 102, 102));
         luzIntermitente.setText("luz de las intermitentes");
-        jPanel1.add(luzIntermitente, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, -1, -1));
+        Panel.add(luzIntermitente, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, -1, -1));
 
         NoGas.setText("Sin gasolina!");
-        jPanel1.add(NoGas, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, -1));
+        Panel.add(NoGas, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, -1));
 
         jTextField1.setEditable(false);
         jTextField1.setText("Gasolina");
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 330, -1, -1));
+        Panel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 330, -1, -1));
 
         jTextField2.setEditable(false);
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("Velocimetro");
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 390, 130, 40));
+        Panel.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 390, 130, 40));
 
         jTextField3.setEditable(false);
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setText("RPM");
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 320, -1, -1));
+        Panel.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 320, -1, -1));
 
         btnAcelerar.setText("Acelerar");
-        jPanel1.add(btnAcelerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 750, -1, -1));
+        btnAcelerar.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                btnAcelerarMouseWheelMoved(evt);
+            }
+        });
+        Panel.add(btnAcelerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 750, -1, -1));
 
         btnFrenoDePieXD.setText("Frenar/retroceder");
-        jPanel1.add(btnFrenoDePieXD, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 750, -1, -1));
+        btnFrenoDePieXD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                btnFrenoDePieXDKeyTyped(evt);
+            }
+        });
+        Panel.add(btnFrenoDePieXD, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 750, -1, -1));
 
-        Numeracion.setEditable(false);
         Numeracion.setBackground(new java.awt.Color(0, 0, 0));
+        Numeracion.setForeground(new java.awt.Color(255, 255, 255));
         Numeracion.setText("0");
-        jPanel1.add(Numeracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 340, -1, -1));
+        Numeracion.setOpaque(true);
+        Panel.add(Numeracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 340, 70, -1));
 
         txtKilometraje.setEditable(false);
         txtKilometraje.setText("Kilometraje");
-        jPanel1.add(txtKilometraje, new org.netbeans.lib.awtextra.AbsoluteConstraints(1155, 310, 80, -1));
+        Panel.add(txtKilometraje, new org.netbeans.lib.awtextra.AbsoluteConstraints(1155, 310, 80, -1));
 
         ImagenDetras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Atras.jpg"))); // NOI18N
         ImagenDetras.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -326,7 +372,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 ImagenDetrasMouseExited(evt);
             }
         });
-        jPanel1.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
+        Panel.add(ImagenDetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
 
         btnAbr4.setBackground(new java.awt.Color(255, 0, 51));
         btnAbr4.setText("Abr4");
@@ -336,7 +382,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnAbr4ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAbr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 200, 60, -1));
+        Panel.add(btnAbr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 200, 60, -1));
 
         btnDes4.setText("Des4");
         btnDes4.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +390,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnDes4ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 150, 60, -1));
+        Panel.add(btnDes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 150, 60, -1));
 
         btnDes.setText("Des1");
         btnDes.addActionListener(new java.awt.event.ActionListener() {
@@ -352,7 +398,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnDesActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 100, 60, -1));
+        Panel.add(btnDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 100, 60, -1));
 
         btnAbr.setBackground(new java.awt.Color(255, 0, 0));
         btnAbr.setText("Abr1");
@@ -362,7 +408,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnAbrActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAbr, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 40, -1, -1));
+        Panel.add(btnAbr, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 40, -1, -1));
 
         btnAbr2.setBackground(new java.awt.Color(255, 0, 0));
         btnAbr2.setText("Abr2");
@@ -372,7 +418,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnAbr2ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAbr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 40, 60, -1));
+        Panel.add(btnAbr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 40, 60, -1));
 
         btnDes2.setText("Des2");
         btnDes2.addActionListener(new java.awt.event.ActionListener() {
@@ -380,7 +426,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnDes2ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 100, 60, -1));
+        Panel.add(btnDes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 100, 60, -1));
 
         btnDes3.setText("Des3");
         btnDes3.addActionListener(new java.awt.event.ActionListener() {
@@ -388,7 +434,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnDes3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 140, 60, -1));
+        Panel.add(btnDes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 140, 60, -1));
 
         btnAbr3.setBackground(new java.awt.Color(255, 0, 51));
         btnAbr3.setText("Abr3");
@@ -398,10 +444,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 btnAbr3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAbr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 200, 60, -1));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
+        Panel.add(btnAbr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 200, 60, -1));
 
         PalaApagado.setText("Apagado");
         PalaApagado.addActionListener(new java.awt.event.ActionListener() {
@@ -409,7 +452,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 PalaApagadoActionPerformed(evt);
             }
         });
-        jPanel1.add(PalaApagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
+        Panel.add(PalaApagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
 
         PalaVelo1.setText("Velocidad 1");
         PalaVelo1.addActionListener(new java.awt.event.ActionListener() {
@@ -417,14 +460,14 @@ public final class FrmCarro extends javax.swing.JFrame {
                 PalaVelo1ActionPerformed(evt);
             }
         });
-        jPanel1.add(PalaVelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
+        Panel.add(PalaVelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
 
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 70, 30));
+        Panel.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 70, 30));
 
         PalaVelo2.setText("Velocidad 2");
         PalaVelo2.addActionListener(new java.awt.event.ActionListener() {
@@ -432,7 +475,7 @@ public final class FrmCarro extends javax.swing.JFrame {
                 PalaVelo2ActionPerformed(evt);
             }
         });
-        jPanel1.add(PalaVelo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, -1, -1));
+        Panel.add(PalaVelo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, -1, -1));
 
         PalaVelo3.setText("Velocidad 3");
         PalaVelo3.addActionListener(new java.awt.event.ActionListener() {
@@ -440,29 +483,29 @@ public final class FrmCarro extends javax.swing.JFrame {
                 PalaVelo3ActionPerformed(evt);
             }
         });
-        jPanel1.add(PalaVelo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, -1, -1));
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 3, -1, 30));
+        Panel.add(PalaVelo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, -1, -1));
+        Panel.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 3, -1, 30));
 
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 240, -1, 30));
+        Panel.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 240, -1, 30));
 
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 240, -1, 30));
+        Panel.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 240, -1, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SistemCinturonHori.jpg"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
+        Panel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
 
         jpalabrisas.setBackground(new java.awt.Color(204, 204, 204));
         jpalabrisas.setPreferredSize(new java.awt.Dimension(320, 75));
-        jPanel1.add(jpalabrisas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 320, 10));
+        Panel.add(jpalabrisas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 320, 10));
 
         ImagenDeFrente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeFrente.jpg"))); // NOI18N
         ImagenDeFrente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -473,7 +516,87 @@ public final class FrmCarro extends javax.swing.JFrame {
                 ImagenDeFrenteMouseExited(evt);
             }
         });
-        jPanel1.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+        Panel.add(ImagenDeFrente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+
+        BoxModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bluetooth", "AM", "FM" }));
+        BoxModo.setToolTipText("");
+        BoxModo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoxModoActionPerformed(evt);
+            }
+        });
+        Panel.add(BoxModo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 760, -1, -1));
+
+        RadioNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioNombreActionPerformed(evt);
+            }
+        });
+        Panel.add(RadioNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 700, 220, 60));
+
+        Siguiente.setText("Siguiente");
+        Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SiguienteActionPerformed(evt);
+            }
+        });
+        Panel.add(Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 760, 90, -1));
+
+        Encendido.setBackground(new java.awt.Color(255, 0, 0));
+        Encendido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EncendidoActionPerformed(evt);
+            }
+        });
+        Panel.add(Encendido, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 760, 40, 20));
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(28, 17, 31, 1));
+        Panel.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 590, -1, -1));
+
+        btnEncendido.setBackground(new java.awt.Color(0, 0, 0));
+        btnEncendido.setForeground(new java.awt.Color(255, 0, 0));
+        btnEncendido.setText("Encendido");
+        btnEncendido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEncendidoActionPerformed(evt);
+            }
+        });
+        Panel.add(btnEncendido, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 560, -1, -1));
+
+        BtnCambio.setText("Cambiar");
+        BtnCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCambioActionPerformed(evt);
+            }
+        });
+        Panel.add(BtnCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 560, -1, -1));
+
+        Aire1.setOpaque(true);
+        Panel.add(Aire1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 610, 10, 40));
+
+        Aire2.setOpaque(true);
+        Panel.add(Aire2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 610, 10, 40));
+
+        btnCalefaccion.setBackground(new java.awt.Color(255, 102, 0));
+        btnCalefaccion.setText("Calefaccion");
+        btnCalefaccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalefaccionActionPerformed(evt);
+            }
+        });
+        Panel.add(btnCalefaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 530, 100, -1));
+
+        btnAC.setBackground(new java.awt.Color(51, 153, 255));
+        btnAC.setText("AC");
+        btnAC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnACActionPerformed(evt);
+            }
+        });
+        Panel.add(btnAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 530, 50, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/CarroDentro_1.jpg"))); // NOI18N
+        Panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, 1030, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -481,14 +604,14 @@ public final class FrmCarro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -506,6 +629,11 @@ public final class FrmCarro extends javax.swing.JFrame {
                 Gasolina.GastarGasolina();
                 SeeGasolina.setValue(Gasolina.ObtenerCantidad());
                 Prueba.setText(String.valueOf(Gasolina.ObtenerCantidad()));
+                kilometraje.AumentarKilometraje();
+                Numeracion.setText(String.valueOf(kilometraje.getKilometraje()));
+                SeeRPM.setValue(kilometraje.getRPM()/1000);
+                NumRPM.setText(String.valueOf(kilometraje.getRPM()/1000));
+                NumVelocimetro.setText(String.valueOf(kilometraje.getVelocidad())+" Km/h");
             }
             if (!motor.estaEncendido()) {
                 luzBaja1.setVisible(false);
@@ -764,6 +892,116 @@ public final class FrmCarro extends javax.swing.JFrame {
         PalaTimer.start();
     }//GEN-LAST:event_PalaVelo3ActionPerformed
 
+    private void RadioNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioNombreActionPerformed
+
+    }//GEN-LAST:event_RadioNombreActionPerformed
+
+    private void BoxModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxModoActionPerformed
+        if (radios.isEstado()) {
+            if (BoxModo.getSelectedIndex() == 0) {
+                RadioNombre.setText("Esperando Dispositivo");
+            } else if (BoxModo.getSelectedIndex() == 1) {
+                RadioNombre.setText(String.valueOf(radios.getEstacionAM()));
+            } else if (BoxModo.getSelectedIndex() == 2) {
+                RadioNombre.setText(String.valueOf(radios.getEstacionFM()));
+            }
+        }
+
+
+    }//GEN-LAST:event_BoxModoActionPerformed
+
+    private void EncendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncendidoActionPerformed
+        if (motor.estaEncendido()) {
+            if (radios.isEstado()) {
+                radios.setEstado(false);
+                Encendido.setBackground(Color.red);
+            } else {
+                radios.setEstado(true);
+                Encendido.setBackground(Color.GREEN);
+            }
+        }
+    }//GEN-LAST:event_EncendidoActionPerformed
+
+    private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
+        if (BoxModo.getSelectedIndex() == 1) {
+            radios.setEstacionAM(EstacionesAM.RadioPampa);
+            RadioNombre.setText(String.valueOf(radios.getEstacionAM()));
+        } else if (BoxModo.getSelectedIndex() == 2) {
+            radios.setEstacionFM(EstacionesFM.BestFM);
+            RadioNombre.setText(String.valueOf(radios.getEstacionFM()));
+        }
+    }//GEN-LAST:event_SiguienteActionPerformed
+
+    private void btnEncendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncendidoActionPerformed
+        if (motor.estaEncendido()) {
+            if (Clima.getVentiladoraVel().APAGADO == Clima.getVentiladoraVel()) {
+                Clima.setVentiladoraVel(VelocidadVen.BAJA);
+                Aire1.setVisible(true);
+                btnEncendido.setForeground(Color.GREEN);
+            } else {
+                Clima.setVentiladoraVel(VelocidadVen.APAGADO);
+                Aire1.setVisible(false);
+                Aire2.setVisible(false);
+                btnEncendido.setForeground(Color.RED);
+            }
+        }
+    }//GEN-LAST:event_btnEncendidoActionPerformed
+    
+    private void BtnCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambioActionPerformed
+        if (motor.estaEncendido()) {
+            if (Clima.getVentiladoraVel().BAJA == Clima.getVentiladoraVel()) {
+                Clima.setVentiladoraVel(VelocidadVen.ALTA);
+                Aire1.setVisible(true);
+                Aire2.setVisible(true);
+            } else {
+                Clima.setVentiladoraVel(VelocidadVen.BAJA);
+                Aire2.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_BtnCambioActionPerformed
+
+    private void btnCalefaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalefaccionActionPerformed
+        if (motor.estaEncendido()) {
+            if(Clima.isCalefaccion()){
+                Clima.ApagarCalefaccion();
+                Aire1.setBackground(Color.LIGHT_GRAY);
+                Aire2.setBackground(Color.LIGHT_GRAY);
+            }else{
+                Clima.EncenderCalefaccion();
+                Aire1.setBackground(Color.ORANGE);
+                Aire2.setBackground(Color.ORANGE);
+            }
+            
+        }
+    }//GEN-LAST:event_btnCalefaccionActionPerformed
+
+    private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
+        if (motor.estaEncendido()) {
+            if(Clima.isAC()){
+                Clima.ApagarAC();
+                Aire1.setBackground(Color.LIGHT_GRAY);
+                Aire2.setBackground(Color.LIGHT_GRAY);
+            }else{
+                Clima.EncenderAC();
+                Aire1.setBackground(Color.CYAN);
+                Aire2.setBackground(Color.CYAN);
+            }
+            
+        }
+    }//GEN-LAST:event_btnACActionPerformed
+
+    private void btnAcelerarMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_btnAcelerarMouseWheelMoved
+        kilometraje.Acelerar();
+        SeeVelocimetro.setValue(kilometraje.getVelocidad());
+        SeeRPM.setValue(kilometraje.getRPM()/1000);
+    }//GEN-LAST:event_btnAcelerarMouseWheelMoved
+
+    private void btnFrenoDePieXDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFrenoDePieXDKeyTyped
+        kilometraje.Frenar();
+        SeeVelocimetro.setValue(kilometraje.getVelocidad());
+    }//GEN-LAST:event_btnFrenoDePieXDKeyTyped
+
+    
     Timer PalaTimer = new Timer(tiempo, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -777,6 +1015,7 @@ public final class FrmCarro extends javax.swing.JFrame {
 
         }
     });
+
     // // // // // // // 
     /**
      * @param args the command line arguments
@@ -804,29 +1043,42 @@ public final class FrmCarro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aire1;
+    private javax.swing.JButton Aire2;
+    private javax.swing.JComboBox<String> BoxModo;
+    private javax.swing.JButton BtnCambio;
+    private javax.swing.JButton Encendido;
     private javax.swing.JLabel ImagenDeFrente;
     private javax.swing.JLabel ImagenDetras;
     private javax.swing.JTextField NoGas;
+    private javax.swing.JTextField NumRPM;
+    private javax.swing.JTextField NumVelocimetro;
     private javax.swing.JTextField Numeracion;
     private javax.swing.JButton PalaApagado;
     private javax.swing.JButton PalaVelo1;
     private javax.swing.JButton PalaVelo2;
     private javax.swing.JButton PalaVelo3;
+    private javax.swing.JPanel Panel;
     private javax.swing.JTextField Prueba;
+    private javax.swing.JTextField RadioNombre;
     private javax.swing.JProgressBar SeeGasolina;
     private javax.swing.JProgressBar SeeRPM;
     private javax.swing.JProgressBar SeeVelocimetro;
     private javax.swing.JTextField Sensor;
+    private javax.swing.JButton Siguiente;
+    private javax.swing.JButton btnAC;
     private javax.swing.JButton btnAbr;
     private javax.swing.JButton btnAbr2;
     private javax.swing.JButton btnAbr3;
     private javax.swing.JButton btnAbr4;
     private javax.swing.JButton btnAcelerar;
+    private javax.swing.JButton btnCalefaccion;
     private javax.swing.JButton btnDes;
     private javax.swing.JButton btnDes2;
     private javax.swing.JButton btnDes3;
     private javax.swing.JButton btnDes4;
     private javax.swing.JButton btnEncenderApagar;
+    private javax.swing.JButton btnEncendido;
     private javax.swing.JButton btnFrenoDePieXD;
     private javax.swing.JButton btnFrenoMano;
     private javax.swing.JButton btnLuces;
@@ -842,7 +1094,7 @@ public final class FrmCarro extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

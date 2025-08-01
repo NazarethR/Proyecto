@@ -12,7 +12,7 @@ import SistemaEncendido.Motor;
 public class Kilometraje {
     private int velocidad;
     private double Kilometraje;
-    private double RPM;
+    private int RPM;
     private Motor EstadoMotor;
 
     public Motor getEstadoMotor() {
@@ -39,11 +39,11 @@ public class Kilometraje {
         this.Kilometraje = Kilometraje;
     }
 
-    public double getRPM() {
-        return RPM;
+    public int getRPM() {
+        return RPM=velocidad*50;
     }
 
-    public void setRPM(double RPM) {
+    public void setRPM(int RPM) {
         this.RPM = RPM;
     }
 
@@ -58,17 +58,15 @@ public class Kilometraje {
         velocidad++;
     }
     
+    public void AumentarKilometraje(){
+        Kilometraje++;
+    }
+    
     public void Frenar(){
         if(this.velocidad>0)
          velocidad--;
     }
     
-    public void ObtenerRPM(){
-        if(this.EstadoMotor.estaEncendido() && 0==velocidad){
-            RPM=800;
-        }else if (velocidad>0){
-            RPM= velocidad*50;
-        }         
-    }
+    
     
 }

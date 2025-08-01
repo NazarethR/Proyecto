@@ -54,19 +54,6 @@ public class Radio {
         this.estacionFM = EstacionesFM.Radio947;
     }
 
-    public void CambiarModo() {
-        int Actual = modo.ordinal();
-        modo.setmodo(Actual + 1);
-    }
 
-    public void CambiarEstacionAM() {
-        int Actual = estacionAM.ordinal();
-        estacionAM.setEstacionAM(Actual + 1);
-    }
-
-    public void CambiarEstacionFM() {
-        int Actual = estacionFM.ordinal();
-        estacionFM.setEstacionFM(Actual + 1);
-    }
 
 }
